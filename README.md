@@ -1,6 +1,6 @@
 
 ```
-"i <" + 12/4 + " u 75 # # # # ";
+"i <" + 12/4 +  "u " + '75' + '97' + '114' + '101' + '110'; 
 ```
 <!---
 Eledoce/Eledoce is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
