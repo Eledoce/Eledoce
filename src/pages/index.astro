@@ -1,5 +1,11 @@
 ---
 import Layout from '@/layouts/Layout.astro'
+import { SiTailwindcss } from 'react-icons/si'
+import { FaReact } from 'react-icons/fa6'
+import { FaHtml5 } from 'react-icons/fa'
+import { FaCss3 } from 'react-icons/fa'
+import { IoLogoJavascript } from 'react-icons/io'
+import { FaNodeJs } from 'react-icons/fa'
 ---
 
 <Layout title="Ángel Ramírez">
@@ -12,11 +18,25 @@ import Layout from '@/layouts/Layout.astro'
         <img src="ARlogo.png" alt="logo" class="imgHero -translate-x-4 z-10" />
       </div>
     </section>
+    <section class="tech">
+      <SiTailwindcss />
+      <FaReact />
+      <FaHtml5 />
+      <FaCss3 />
+      <IoLogoJavascript />
+      <FaNodeJs />
+    </section>
   </main>
 </Layout>
 
 <style>
   .imgHero {
     @apply w-20 h-20 rounded-full;
+  }
+  .tech {
+    @apply flex justify-center items-center gap-2;
+  }
+  .tech > * {
+    @apply text-6xl;
   }
 </style>
