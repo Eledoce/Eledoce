@@ -3,9 +3,13 @@ import Layout from '@/layouts/Layout.astro'
 import { SiTailwindcss } from 'react-icons/si'
 import { FaReact } from 'react-icons/fa6'
 import { FaHtml5 } from 'react-icons/fa'
-import { FaCss3 } from 'react-icons/fa'
-import { IoLogoJavascript } from 'react-icons/io'
+import { FaCss3Alt } from 'react-icons/fa6'
+import { SiJavascript } from 'react-icons/si'
 import { FaNodeJs } from 'react-icons/fa'
+import { FaDocker } from 'react-icons/fa'
+
+import { FaGithub } from 'react-icons/fa'
+import { FaGitAlt } from 'react-icons/fa'
 ---
 
 <Layout title="Ángel Ramírez">
@@ -19,12 +23,15 @@ import { FaNodeJs } from 'react-icons/fa'
       </div>
     </section>
     <section class="tech">
-      <SiTailwindcss />
-      <FaReact />
-      <FaHtml5 />
-      <FaCss3 />
-      <IoLogoJavascript />
-      <FaNodeJs />
+      <SiTailwindcss className="text-[#38BDF8]" />
+      <FaReact className="text-[#57B9D8]" />
+      <FaHtml5 className="text-[#FE4C1E]" />
+      <FaCss3Alt className="text-[#214CE5]" />
+      <SiJavascript className="text-[#F0DB4E] bg-[#333331]" />
+      <FaNodeJs className="text-[#8BC500]" />
+      <FaDocker className="text-[#1D63ED]" />
+      <FaGithub className="text-[#FFFFFF] " />
+      <FaGitAlt className="text-[#F34F29]" />
     </section>
   </main>
 </Layout>
