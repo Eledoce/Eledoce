@@ -1,0 +1,62 @@
+---
+import { FaLinkedin } from 'react-icons/fa6'
+import { FaGithub } from 'react-icons/fa'
+---
+
+<section class="flex items-center gap-5 justify-center">
+  <section class="flex items-center">
+    <!--  <img src="foto.jpg" alt="foto" class="imgHero" /> -->
+    <img src="ARlogo.png" alt="logo" class="imgHero z-10" />
+  </section>
+  <div>
+    <h1 class="font-Palanquin text-5xl font-medium -translate-x-1">
+      Ángel Ramírez
+    </h1>
+    <h2 class="font-Palanquin text-3xl">
+      Programador Web
+
+      <span class="green"> Full Stack</span>
+    </h2>
+
+    <p class="text-xl text-emerald-300/80 pl-2">
+      Ingeniero en sistemas computacionales
+    </p>
+
+    <div class="flex gap-2 mt-1 -translate-x-0">
+      <a
+        href="https://www.linkedin.com/in/miguel-ángel-barrientos-ramírez-775bb8248"
+        class="linkedin"
+        target="_blank"
+      >
+        Linkedin
+        <FaLinkedin className="" />
+      </a>
+      <a href="https://github.com/Eledoce" target="_blank" class="github">
+        GitHub
+        <FaGithub />
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  h2 {
+    @apply text-emerald-100/80 pl-1;
+  }
+  .green {
+    @apply text-[#00F89B];
+  }
+  .github {
+    @apply bg-gray-100  text-stone-900 font-semibold flex justify-center items-center p-1 px-2 gap-1 rounded-full;
+  }
+
+  .linkedin {
+    @apply bg-[#1873B8] font-semibold flex justify-center items-center p-1 px-2 gap-1 rounded-full;
+  }
+  .imgHero {
+    @apply w-44 h-44 rounded-full;
+  }
+  a {
+    @apply text-sm h-fit transition-all hover:scale-105 active:scale-95;
+  }
+</style>
