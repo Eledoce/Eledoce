@@ -1,0 +1,17 @@
+---
+import { Code } from 'astro:components'
+import CopyButton from './CopyButton'
+const { code = '', lang = 'js', theme = 'dracula', title = '' } = Astro.props
+---
+
+<div class="p-5 bg-[#282A36] rounded text- relative shadow-xl">
+  <div
+    class="absolute top-0 left-0 bg-[#44475A] text-[#F8F8F2] px-2 py-1 text-xs font-bold rounded-tl rounded-br"
+  >
+    {title}
+  </div>
+
+  <Code code={code} lang="js" theme="dracula" />
+
+  <CopyButton text={code} client:load />
+</div>
