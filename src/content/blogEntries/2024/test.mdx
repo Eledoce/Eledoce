@@ -1,0 +1,249 @@
+---
+title: 'Test'
+date: '2024-01-01'
+tags: ['test']
+---
+import CodeE from '@/components/CodeE.astro'
+
+
+# Configuración actual de Tenpo
+
+Ya tienen configurado el `kubernetes monitoring`, `otel operator` y el `cert manager`. Se desplegó una `Instrumentation` en el cluster y se agregó una anotación en el `namespace` para Java (algo similar a `instrumentation.opentelemetry.io/inject-java: default/name-instrumentation`).
+
+Para estar más seguros de la configuración que se va a aplicar, hay que eliminar:
+
+- La anotación en el namespace.
+- La instancia de monitoreo.
+- OTel Operator.
+- Cert-Manager.
+
+# Multi instrumentación
+
+## Instalación de cert-manager
+
+<CodeE
+  code={`kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.15.2/cert-manager.yaml`}
+  title="shell"
+  lang="sh"
+/>
+
+## Instalación de OTel Operator
+
+Hay que agregar un flag para permitir la multi instrumentación. Para eso, hay que descargar el YAML y buscar `- --metrics-addr=127.0.0.1:8080`, y agregar el flag `--enable-multi-instrumentation=true` de la siguiente manera:
+
+<CodeE
+  code={`spec:
+  containers:
+    - args:
+        - --metrics-addr=127.0.0.1:8080
+        - --enable-leader-election
+        - --zap-log-level=info
+        - --zap-time-encoding=rfc3339nano
+        - --enable-nginx-instrumentation=true
+        - --enable-multi-instrumentation=true`}
+  title="YAML"
+  lang="yaml"
+/>
+
+El YAML del OTel Operator está en:
+
+[OpenTelemetry Operator](https://github.com/open-telemetry/opentelemetry-operator/releases/latest/download/opentelemetry-operator.yaml)
+
+> Una vez hecha la modificación, se debe aplicar el YAML.
+
+## Configuración de las instancias de monitoreo
+
+Hay que desplegar una `Instrumentation` para Java y otra para Python.
+
+### Java
+
+Crear un archivo YAML con la instrumentación para Java y copiar el siguiente contenido:
+
+<CodeE
+  code={`apiVersion: opentelemetry.io/v1alpha1
+kind: Instrumentation
+metadata:
+  name: java-instrumentation
+spec:
+  java:
+    image: us-docker.pkg.dev/grafanalabs-global/docker-grafana-opentelemetry-java-prod/grafana-opentelemetry-java:2.3.0-beta.1
+  exporter:
+    endpoint: http://endpoint...
+  propagators:
+    - tracecontext
+    - baggage
+  sampler:
+    type: parentbased_traceidratio
+    argument: "1"`}
+  title="YAML"
+  lang="yaml"
+/>
+
+Aplicar con `kubectl apply -f sample.yaml`.
+
+### Python
+
+<CodeE
+  code={`apiVersion: opentelemetry.io/v1alpha1
+kind: Instrumentation
+metadata:
+  name: py-instrumentation
+spec:
+  exporter:
+    endpoint: http://endpoint...
+  propagators:
+    - tracecontext
+    - baggage
+  sampler:
+    type: parentbased_traceidratio
+    argument: "1"`}
+  title="YAML"
+  lang="yaml"
+/>
+
+De igual forma, es importante el `metadata.name` y el `spec.exporter.endpoint`.
+
+## Anotación en el namespace
+
+<CodeE
+  code={`instrumentation.opentelemetry.io/inject-java: default/java-instrumentation
+instrumentation.opentelemetry.io/inject-python: default/py-instrumentation
+instrumentation.opentelemetry.io/java-container-names: "java-deployment1, java-deployment2,..."
+instrumentation.opentelemetry.io/python-container-names: "python-deployment1, python-deployment2,..."`}
+  title="YAML"
+  lang="yaml"
+/>
+
+> Solo quedaría eliminar los pods de los deployments para que se aplique la instrumentación.
+
+# Instrumentación con Ruby
+
+Antes que nada, hay que crear un namespace para Beyla:
+
+<CodeE
+  code={`kubectl create namespace beyla`}
+  title="shell"
+  lang="sh"
+/>
+
+## Secrets
+
+<CodeE
+  code={`apiVersion: v1
+kind: Secret
+metadata:
+  namespace: beyla
+  name: grafana-credentials
+type: Opaque
+stringData:
+  otlp-endpoint: http://grafanaenpoint...
+  otlp-headers: "Authorization=Basic ODcy.."`}
+  title="YAML"
+  lang="yaml"
+/>
+
+## Permisos
+
+<CodeE
+  code={`apiVersion: v1
+kind: ServiceAccount
+metadata:
+  namespace: beyla
+  name: beyla
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: beyla
+rules:
+  - apiGroups: [ "apps" ]
+    resources: [ "replicasets" ]
+    verbs: [ "list", "watch" ]
+  - apiGroups: [ "" ]
+    resources: [ "pods", "services", "nodes" ]
+    verbs: [ "list", "watch" ]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: beyla
+subjects:
+  - kind: ServiceAccount
+    name: beyla
+    namespace: beyla
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: beyla`}
+  title="YAML"
+  lang="yaml"
+/>
+
+## Instrumentación
+
+<CodeE
+  code={`apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: beyla
+  name: beyla-config
+data:
+  beyla-config.yml: |
+    attributes:
+      kubernetes:
+        enable: true
+    routes:
+      unmatched: heuristic
+    discovery:
+      services:
+        - k8s_deployment_name: "^ruby-deployment-name$"
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  namespace: beyla
+  name: beyla
+spec:
+  selector:
+    matchLabels:
+      instrumentation: beyla
+  template:
+    metadata:
+      labels:
+        instrumentation: beyla
+    spec:
+      serviceAccountName: beyla
+      hostPID: true
+      containers:
+        - name: beyla
+          image: grafana/beyla:latest
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - mountPath: /config
+              name: beyla-config
+            - mountPath: /var/run/beyla
+              name: var-run-beyla
+          env:
+            - name: BEYLA_CONFIG_PATH
+              value: "/config/beyla-config.yml"
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: grafana-credentials
+                  key: otlp-endpoint
+            - name: OTEL_EXPORTER_OTLP_HEADERS
+              valueFrom:
+                secretKeyRef:
+                  name: grafana-credentials
+                  key: otlp-headers
+      volumes:
+        - name: beyla-config
+          configMap:
+            name: beyla-config
+        - name: var-run-beyla
+          emptyDir: {}`}
+  title="YAML"
+  lang="yaml"
+/>
+

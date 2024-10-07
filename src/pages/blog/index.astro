@@ -1,13 +1,19 @@
 ---
 import CodeE from '@/components/CodeE.astro'
+import { getCollection } from 'astro:content'
+
+const blogEntries = await getCollection('blogEntries')
+console.log(blogEntries)
 ---
 
 <div class="p-5">
-  <CodeE
-    code={`
-    console.log('hello world')
-    const foo = 'bar'
-     `}
-    title="yo"
-  />
+  <h1>entradas</h1>
+  {
+    blogEntries.map((entry) => (
+      <a href={`/blog/${entry.slug}`} class="block">
+        <h1>{entry.data.title}</h1>
+        <p>{entry.data.date}</p>
+      </a>
+    ))
+  }
 </div>

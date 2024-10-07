@@ -1,0 +1,32 @@
+---
+const { title } = Astro.props
+---
+
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Portafolio" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body class="bg-slate-900 text-white markdown">
+    <slot />
+  </body>
+</html>
+<style is:global>
+  .markdown {
+    /* Text */
+    @apply prose-p:text-white/50;
+
+    /* links */
+    @apply prose-a:text-teal-300 prose-a:underline;
+
+    /* H1 */
+    @apply prose-h1:text-3xl prose-h1:text-teal-100 print:prose-h1:text-black;
+
+    /* H2 */
+    @apply prose-h2:text-2xl prose-h2:text-teal-200 print:prose-h2:text-gray-800;
+  }
+</style>

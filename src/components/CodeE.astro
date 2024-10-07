@@ -4,14 +4,22 @@ import CopyButton from './CopyButton'
 const { code = '', lang = 'js', theme = 'dracula', title = '' } = Astro.props
 ---
 
-<div class="p-5 bg-[#282A36] rounded text- relative shadow-xl">
-  <div
-    class="absolute top-0 left-0 bg-[#44475A] text-[#F8F8F2] px-2 py-1 text-xs font-bold rounded-tl rounded-br"
-  >
-    {title}
+<div class="bg-[#282A36] rounded shadow-xl mt-2">
+  <section class="flex justify-between">
+    <p
+      class="pt-2 bg-[#282A36] rounded-tl text-white/50 px-5 py-1 text-xs font-medium"
+    >
+      {title}
+    </p>
+    <CopyButton text={code} client:load />
+  </section>
+  <hr class="mx-2 mr-16 my-1 border-[#44475A]" />
+  <div class="p-3 relative text-sm">
+    <Code
+      code={code}
+      lang={lang}
+      theme="dracula"
+      class="scrollbar-thumb-[#44475A] scrollbar-track-transparent scrollbar-thin"
+    />
   </div>
-
-  <Code code={code} lang="js" theme="dracula" />
-
-  <CopyButton text={code} client:load />
 </div>

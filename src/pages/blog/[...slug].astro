@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content'
+import LayoutMd from '@/layouts/LayoutBlog.astro'
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('blogEntries')
+  return blogEntries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }))
+}
+
+const { entry } = Astro.props
+const { Content } = await entry.render()
+---
+
+<LayoutMd title={entry.data.title}>
+  <div class="flex">
+    <div class="b p-5 w-2/3">
+      <h1>
+        {entry.data.title}
+      </h1>
+      <Content />
+    </div>
+    <div class="w-1/3"></div>
+  </div>
+</LayoutMd>
+
+<style>
+  h1 {
+    @apply text-4xl;
+  }
+</style>
