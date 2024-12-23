@@ -6,16 +6,6 @@ tags: ['test']
 import CodeE from '@/components/CodeE.astro'
 
 
-# Configuración actual de Tenpo
-
-Ya tienen configurado el `kubernetes monitoring`, `otel operator` y el `cert manager`. Se desplegó una `Instrumentation` en el cluster y se agregó una anotación en el `namespace` para Java (algo similar a `instrumentation.opentelemetry.io/inject-java: default/name-instrumentation`).
-
-Para estar más seguros de la configuración que se va a aplicar, hay que eliminar:
-
-- La anotación en el namespace.
-- La instancia de monitoreo.
-- OTel Operator.
-- Cert-Manager.
 
 # Multi instrumentación
 
