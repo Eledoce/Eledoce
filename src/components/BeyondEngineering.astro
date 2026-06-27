@@ -1,0 +1,46 @@
+---
+import Section from './Section.astro'
+import SectionTitle from './SectionTitle.astro'
+import { SiGodotengine } from 'react-icons/si'
+import { FaPaintbrush } from 'react-icons/fa6'
+---
+
+<Section id="beyond" class="bg-[#0d1117]">
+  <SectionTitle>Más allá de la ingeniería</SectionTitle>
+  
+  <div class="space-y-6">
+    <h3 class="text-3xl md:text-4xl font-bold text-gray-100">
+      Construyendo y creando cosas
+    </h3>
+    
+    <p class="text-gray-300 leading-relaxed max-w-2xl">
+      Fuera del trabajo profesional, disfruto explorar proyectos creativos que involucran construir y resolver problemas en diferentes contextos.
+    </p>
+
+    <div class="grid md:grid-cols-2 gap-6 pt-4">
+      <div class="p-6 rounded-lg bg-[#0a0e14] border border-gray-800">
+        <div class="flex items-center gap-3 mb-3">
+          <SiGodotengine className="text-2xl text-[#478CBF]" />
+          <h4 class="text-lg font-semibold text-gray-100">Desarrollo de Videojuegos</h4>
+        </div>
+        <p class="text-gray-400 text-sm">
+          Explorando diseño y desarrollo de juegos con Godot, aprendiendo sobre diseño de sistemas desde una perspectiva diferente.
+        </p>
+      </div>
+
+      <div class="p-6 rounded-lg bg-[#0a0e14] border border-gray-800">
+        <div class="flex items-center gap-3 mb-3">
+          <FaPaintbrush className="text-2xl text-primary-400" />
+          <h4 class="text-lg font-semibold text-gray-100">Arte Tradicional</h4>
+        </div>
+        <p class="text-gray-400 text-sm">
+          Pintando con gouache y explorando arte digital como salidas creativas.
+        </p>
+      </div>
+    </div>
+
+    <p class="text-sm text-gray-500 pt-4">
+      Estas actividades comparten un hilo común: todas involucran crear algo desde cero, entender sistemas e iterar sobre ideas.
+    </p>
+  </div>
+</Section>

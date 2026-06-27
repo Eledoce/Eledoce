@@ -1,0 +1,103 @@
+---
+import Section from './Section.astro'
+import SectionTitle from './SectionTitle.astro'
+import { 
+  SiGrafana, 
+  SiPrometheus, 
+  SiKubernetes, 
+  SiDocker,
+  SiLinux,
+  SiTypescript,
+  SiJavascript,
+  SiReact,
+  SiNodedotjs,
+  SiGit,
+  SiVim
+} from 'react-icons/si'
+---
+
+<Section id="stack" class="bg-[#0d1117]">
+  <SectionTitle>Stack Técnico</SectionTitle>
+  
+  <div class="space-y-12">
+    <div>
+      <h3 class="text-2xl font-bold mb-6 text-gray-100">
+        Observabilidad y Monitoreo
+      </h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="flex flex-col items-center gap-3 p-4 rounded-lg bg-[#0a0e14] border border-gray-800 hover:border-primary-500/50 transition-colors">
+          <SiGrafana className="text-4xl text-[#F46800]" />
+          <span class="text-sm text-gray-400 font-medium">Grafana</span>
+        </div>
+        <div class="flex flex-col items-center gap-3 p-4 rounded-lg bg-[#0a0e14] border border-gray-800 hover:border-primary-500/50 transition-colors">
+          <div class="text-4xl text-[#E6522C] font-bold">OTel</div>
+          <span class="text-sm text-gray-400 font-medium">OpenTelemetry</span>
+        </div>
+        <div class="flex flex-col items-center gap-3 p-4 rounded-lg bg-[#0a0e14] border border-gray-800 hover:border-primary-500/50 transition-colors">
+          <SiPrometheus className="text-4xl text-[#E6522C]" />
+          <span class="text-sm text-gray-400 font-medium">Prometheus</span>
+        </div>
+        <div class="flex flex-col items-center gap-3 p-4 rounded-lg bg-[#0a0e14] border border-gray-800 hover:border-primary-500/50 transition-colors">
+          <div class="text-4xl text-primary-400 font-bold font-mono">Loki</div>
+          <span class="text-sm text-gray-400 font-medium">Loki</span>
+        </div>
+        <div class="flex flex-col items-center gap-3 p-4 rounded-lg bg-[#0a0e14] border border-gray-800 hover:border-primary-500/50 transition-colors">
+          <div class="text-4xl text-primary-400 font-bold font-mono">Tempo</div>
+          <span class="text-sm text-gray-400 font-medium">Tempo</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="text-2xl font-bold mb-6 text-gray-100">
+        Cloud Native e Infraestructura
+      </h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="flex flex-col items-center gap-3 p-4 rounded-lg bg-[#0a0e14] border border-gray-800 hover:border-primary-500/50 transition-colors">
+          <SiKubernetes className="text-4xl text-[#326CE5]" />
+          <span class="text-sm text-gray-400 font-medium">Kubernetes</span>
+        </div>
+        <div class="flex flex-col items-center gap-3 p-4 rounded-lg bg-[#0a0e14] border border-gray-800 hover:border-primary-500/50 transition-colors">
+          <SiDocker className="text-4xl text-[#2496ED]" />
+          <span class="text-sm text-gray-400 font-medium">Docker</span>
+        </div>
+        <div class="flex flex-col items-center gap-3 p-4 rounded-lg bg-[#0a0e14] border border-gray-800 hover:border-primary-500/50 transition-colors">
+          <SiLinux className="text-4xl text-[#FCC624]" />
+          <span class="text-sm text-gray-400 font-medium">Linux</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="text-2xl font-bold mb-6 text-gray-100">
+        Desarrollo y Automatización
+      </h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="flex flex-col items-center gap-3 p-4 rounded-lg bg-[#0a0e14] border border-gray-800 hover:border-primary-500/50 transition-colors">
+          <SiTypescript className="text-4xl text-[#3178C6]" />
+          <span class="text-sm text-gray-400 font-medium">TypeScript</span>
+        </div>
+        <div class="flex flex-col items-center gap-3 p-4 rounded-lg bg-[#0a0e14] border border-gray-800 hover:border-primary-500/50 transition-colors">
+          <SiJavascript className="text-4xl text-[#F7DF1E]" />
+          <span class="text-sm text-gray-400 font-medium">JavaScript</span>
+        </div>
+        <div class="flex flex-col items-center gap-3 p-4 rounded-lg bg-[#0a0e14] border border-gray-800 hover:border-primary-500/50 transition-colors">
+          <SiReact className="text-4xl text-[#61DAFB]" />
+          <span class="text-sm text-gray-400 font-medium">React</span>
+        </div>
+        <div class="flex flex-col items-center gap-3 p-4 rounded-lg bg-[#0a0e14] border border-gray-800 hover:border-primary-500/50 transition-colors">
+          <SiNodedotjs className="text-4xl text-[#339933]" />
+          <span class="text-sm text-gray-400 font-medium">Node.js</span>
+        </div>
+        <div class="flex flex-col items-center gap-3 p-4 rounded-lg bg-[#0a0e14] border border-gray-800 hover:border-primary-500/50 transition-colors">
+          <SiGit className="text-4xl text-[#F05032]" />
+          <span class="text-sm text-gray-400 font-medium">Git</span>
+        </div>
+        <div class="flex flex-col items-center gap-3 p-4 rounded-lg bg-[#0a0e14] border border-gray-800 hover:border-primary-500/50 transition-colors">
+          <SiVim className="text-4xl text-[#019733]" />
+          <span class="text-sm text-gray-400 font-medium">Vim</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</Section>

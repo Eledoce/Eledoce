@@ -1,34 +1,35 @@
 ---
-import '@fontsource/palanquin-dark'
-// Supports weights 400-800
-import '@fontsource-variable/baloo-2'
+import '@fontsource-variable/inter'
+import '@fontsource-variable/jetbrains-mono'
 
 interface Props {
   title: string
+  description?: string
 }
 
-const { title } = Astro.props
+const { title, description = 'Arquitecto de Observabilidad • Ingeniero en Sistemas' } = Astro.props
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Portafolio" />
+    <meta name="description" content={description} />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body>
+  <body class="bg-[#0a0e14] text-gray-100 antialiased">
     <slot />
   </body>
 </html>
 <style is:global>
   html {
-    font-family: system-ui, sans-serif;
-    color: white;
-    background: #1c202c;
-    background-size: 224px;
+    font-family: 'Inter Variable', system-ui, sans-serif;
+  }
+  
+  * {
+    scroll-behavior: smooth;
   }
 </style>
